@@ -105,11 +105,12 @@ class Dataset:
         files = list(
             itertools.chain(*map(lambda path: glob.glob(str(path)), files))
         )
-        exclude = pd.concat(
-            map(lambda file: pd.read_csv(file, header=None), files)
+        exclude = (
+            pd.concat(map(lambda file: pd.read_csv(file, header=None), files))
+            .set_index(0)
+            .index.unique()
         )
-        exclude = exclude.rename({0: settings.fields.index}, axis=1)
-        exclude = set(exclude[settings.fields.index].to_list())
+
         print(f"removing {len(exclude)} records from {len(files)} files:")
         for file in files:
             print(f"- {file}")
