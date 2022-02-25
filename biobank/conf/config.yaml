@@ -1,0 +1,5 @@
+path: .biobank
+fields:
+  index: eid
+dictionary:
+  url: https://biobank.ctsu.ox.ac.uk/~bbdatan/Data_Dictionary_Showcase.tsv
