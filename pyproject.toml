@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "biobank-tools"
-version = "0.1.0"
+version = "0.1.1"
 homepage = "https://github.com/altaf-ali/biobank-tools"
 description = "Biobank Tools."
 authors = ["Altaf Ali <altaf@firecrest.io>"]
