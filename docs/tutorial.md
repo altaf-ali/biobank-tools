@@ -131,7 +131,7 @@ only contains the fields you're interested in.
 
 
 ```console
-$ biobank select 2000. --output data/ukb_cancer.csv
+$ biobank select "2000[67]" --output data/ukb_cancer.csv
 ---> 100%
 writing data/ukb_cancer.csv
 ```
@@ -164,7 +164,8 @@ eid                                                                             
 ### Loading dataset in Python
 
 You can load the dataset in Python and apply the same field filters that you
-would at the command line.
+would at the command line. The `select` method returns the data as a Pandas
+DataFrame.
 
 ```python
 from biobank import Dataset
