@@ -44,7 +44,34 @@ Once you have a copy of the source, you can install it with:
 $ pip install .
 ```
 
+# Verify installation
+
+Verify that Biobank Tools are installed correctly by running the `biobank`
+command.
+
+<div class="termy">
+
+``` console
+$ biobank --help
+Usage: biobank [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --install-completion  Install completion for the current shell.
+  --show-completion     Show completion for the current shell, to copy it or
+                        customize the installation.
+  --help                Show this message and exit.
+
+Commands:
+  exclude  Exclude from biobank dataset.
+  fields   Show dataset fields.
+  import   Import biobank dataset.
+  select   Select fields from a dataset.
+```
+
+</div>
+
+
   [pip]: https://pip.pypa.io
   [Python installation guide]: http://docs.python-guide.org/en/latest/starting/installation/
-  [Github repo]: https://github.com/%7B%7B%20cookiecutter.github_username%20%7D%7D/%7B%7B%20cookiecutter.project_slug%20%7D%7D
-  [tarball]: https://github.com/%7B%7B%20cookiecutter.github_username%20%7D%7D/%7B%7B%20cookiecutter.project_slug%20%7D%7D/tarball/master
+  [Github repo]: https://github.com/altaf-ali/biobank-tools
+  [tarball]: https://github.com/altaf-ali/biobank-tools/tarball/master

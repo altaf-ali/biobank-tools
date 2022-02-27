@@ -55,7 +55,9 @@ commands = Commands()
 
 
 @commands.command(name="import")
-def import_dataset(path: str, force: bool = False) -> None:
+def import_dataset(
+    filename: Path, dictionary: Path = typer.Option(None), force: bool = False
+) -> None:
     """Import biobank dataset."""
     if commands.dataset.path.exists():
         if force:
@@ -64,7 +66,7 @@ def import_dataset(path: str, force: bool = False) -> None:
             commands.exit(
                 "Dataset already imported. Use --force to overwite it."
             )
-    commands.dataset.import_dataset(path)
+    commands.dataset.import_dataset(filename, dictionary)
 
 
 @commands.command()
