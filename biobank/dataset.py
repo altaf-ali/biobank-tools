@@ -23,8 +23,9 @@ class Dataset:
 
     def __init__(self):
         """Constructor."""
-        self.path = settings.path / self.filename
-        self.dictionary = Dictionary(settings.path)
+        path = settings.path.absolute()
+        self.path = path / self.filename
+        self.dictionary = Dictionary(path)
 
     def delete(self) -> None:
         """Delete the dataset.
@@ -85,7 +86,7 @@ class Dataset:
         columns = filter(lambda field: re.match(pattern, field), columns)
         return list(columns)
 
-    def import_dataset(self, path) -> None:
+    def import_dataset(self, path, dictionary) -> None:
         """Import a dataset.
 
         Args:
@@ -94,7 +95,7 @@ class Dataset:
         Returns:
             None
         """
-        self.dictionary.load(download=True)
+        self.dictionary.load(dictionary, download=True)
         with ProgressBar():
             import_manager = ImportManager()
             data, schema = import_manager.import_dataset(self.dictionary, path)
@@ -124,16 +125,6 @@ class Dataset:
             }
             self.save(data, schema)
 
-    def replace_nans(self, data, value=""):
-        return data.replace(
-            to_replace={
-                col: {np.nan: value}
-                for col in data.select_dtypes(
-                    [np.number, np.datetime64, object]
-                ).columns
-            }
-        )
-
     def select(self, fields=None, limit=None) -> pd.DataFrame:
         """Select specific fields from the Biobank dataset.
 
@@ -153,7 +144,15 @@ class Dataset:
 
         with ProgressBar():
             dataset = self.load(columns=fields, use_threads=True)
-            dataset = self.replace_nans(dataset.compute())
+            dataset = dataset.replace(
+                to_replace={
+                    col: {np.nan: ""}
+                    for col in dataset.select_dtypes(
+                        [np.float64, np.datetime64, object]
+                    ).columns
+                }
+            )
+            dataset = dataset.compute()
             if limit:
                 dataset = dataset.iloc[:limit]
 
