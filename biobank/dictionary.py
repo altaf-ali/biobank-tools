@@ -67,24 +67,27 @@ class Dictionary:
             ]
         return dictionary
 
-    def load(self, download: bool = False) -> pd.DataFrame:
+    def load(self, path=None, download: bool = False) -> pd.DataFrame:
         if not self.exists() and download:
-            self.download()
+            self.download(path)
 
         dictionary = pd.read_parquet(self.path)
         dictionary.FieldID = dictionary.FieldID.astype(str)
         return dictionary
 
-    def download(self) -> None:
+    def download(self, path=None) -> None:
         """Download dictionary from URL.
 
         Returns:
             None
         """
-        print(f"downloading dictionary from {settings.dictionary.url}")
+        if not path:
+            path = settings.dictionary.url
+
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with ProgressBar():
-            dictionary = dd.read_table(settings.dictionary.url)
+            print(f"loading dictionary from {path}")
+            dictionary = dd.read_table(path)
             dictionary = dictionary.compute()
             dictionary.to_parquet(self.path)
 

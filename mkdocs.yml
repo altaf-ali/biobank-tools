@@ -4,10 +4,10 @@ repo_url: https://github.com/altaf-ali/biobank-tools
 repo_name: altaf-ali/biobank-tools
 #strict: true
 nav:
-  - Home: index.md
+  - Introduction: index.md
   - Installation: installation.md
-  - Usage: usage.md
-  - Modules: api.md
+  - Tutorial: tutorial.md
+  - Reference: api.md
   - Contributing: contributing.md
   - Changelog: changelog.md
 theme:

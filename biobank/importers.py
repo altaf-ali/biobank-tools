@@ -41,14 +41,14 @@ class ImportManager(metaclass=Singleton):
         return registrar
 
     def get_suffix(self, path):
-        url = urlsplit(path)
+        url = urlsplit(str(path))
         if url.scheme:
             path = url.path
 
         return Path(path).suffix
 
     def import_dataset(self, dictionary, path, **kwargs):
-        print(f"importing dataset from {path}")
+        print(f"importing {path}")
         suffix = self.get_suffix(path)
         try:
             importer = self.importers[suffix](dictionary)
@@ -67,7 +67,7 @@ class DataImporter(ABC):
     def __call__(self, path, **kwargs):
         raise NotImplementedError
 
-    def import_dataset(self, path, import_func):
+    def get_schema(self, path, import_func):
         header = import_func(path)
         columns = dict.fromkeys(header.columns)
         schema = {
@@ -78,6 +78,10 @@ class DataImporter(ABC):
             for col, _ in columns.items()
         }
         schema[settings.fields.index] = pa.int64()
+        return schema, dtypes
+
+    def import_dataset(self, path, import_func):
+        schema, dtypes = self.get_schema(path, import_func)
         dataset = import_func(path, dtype=dtypes)
         dataset = dataset.set_index(settings.fields.index)
         return dataset, schema
