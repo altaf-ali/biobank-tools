@@ -586,7 +586,7 @@ only contains the fields you're interested in.</p>
 <div class="termy">
 
 
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>biobank <span class="k">select</span> <span class="m">2000</span>. --output data/ukb_cancer.csv
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>biobank <span class="k">select</span> <span class="s2">&quot;2000[67]&quot;</span> --output data/ukb_cancer.csv
 <span class="go">---&gt; 100%</span>
 <span class="go">writing data/ukb_cancer.csv</span>
 </code></pre></div>
@@ -615,7 +615,8 @@ results to the screen instead.</p>
 </code></pre></div>
 <h4 id="loading-dataset-in-python">Loading dataset in Python<a class="headerlink" href="#loading-dataset-in-python" title="Permanent link">&para;</a></h4>
 <p>You can load the dataset in Python and apply the same field filters that you
-would at the command line.</p>
+would at the command line. The <code>select</code> method returns the data as a Pandas
+DataFrame.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">biobank</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">()</span>
@@ -739,7 +740,7 @@ eid                                                                             
       <script>
         app = initialize({
           base: "..",
-          features: ['navigation.indexes', 'navigation.instant', 'navigation.tabs.sticky'],
+          features: ['navigation.indexes', 'navigation.tabs.sticky'],
           search: Object.assign({
             worker: "../assets/javascripts/worker/search.9c0e82ba.min.js"
           }, typeof search !== "undefined" && search)
