@@ -67,7 +67,7 @@ $ biobank fields 20006 20007
 You can get the same results using regular expressions as well.
 
 ```console
-$ biobank fields '2000[67]'
+$ biobank fields "2000[67]"
     FieldID   ValueType        Units                                              Field
 849   20006  Continuous  micrometres      Interpolated Year when cancer first diagnosed
 850   20007  Continuous  micrometres  Interpolated Age of participant when cancer fi...
@@ -120,7 +120,7 @@ saving dataset to .biobank/dataset.parquet
 There are two ways to work with dataset created by Biobank Tools.
 
 1. You can export the data to a .CSV file
-2. You can load the Parquet dataset directly in Python
+2. You can load the dataset directly in Python
 
 ### Exporting to .CSV
 
@@ -142,32 +142,35 @@ If you omit the `--output` option, the `biobank select` command will output the
 results to the screen instead.
 
 ```console
-$ biobank select 2000.
-[########################################] | 100% Completed | 46.7s
-           20006-0.0    20006-0.1    20006-0.2    20006-0.3    20006-0.4    20006-0.5 20006-1.0 20006-1.1  ...  20009-3.9 20009-3.11 20009-3.12 20009-3.13 20009-3.14 20009-3.15 20009-3.16 20009-3.17
+$ biobank select "2000[67]"
+[########################################] | 100% Completed |  9.8s
+           20006-0.0    20006-0.1    20006-0.2    20006-0.3    20006-0.4    20006-0.5 20006-1.0 20006-1.1  ... 20007-1.3  20007-2.0  20007-2.1  20007-2.2  20007-2.3  20007-2.4  20007-3.0  20007-3.1
 eid                                                                                                        ...
 1000016  1951.771450  1959.965254  1959.758862  2108.331238  1793.185997  2052.090334                      ...
-1000048  1927.954080  1780.621043  1768.346392  2166.976559  1092.823152  1958.248591                      ... -14.859826  16.655069  28.129545  33.146539  33.980917   8.690318  13.539277  32.350284
+1000048  1927.954080  1780.621043  1768.346392  2166.976559  1092.823152  1958.248591                      ...            57.135394  52.331757  49.393116  64.879196  68.577423  51.484781  66.384343
 1000057  1783.957575  2055.652053  2055.706534  1854.930873  1398.633216  1942.852454                      ...
 1000059  2036.818137  2222.614293  2239.943216  1932.932354  2801.628978  1920.073145                      ...
 1000063  2037.248163  2142.236323  2146.492165  2092.512233  1534.692268  1844.065170                      ...
-...              ...          ...          ...          ...          ...          ...       ...       ...  ...        ...        ...        ...        ...        ...        ...        ...        ...
+...              ...          ...          ...          ...          ...          ...       ...       ...  ...       ...        ...        ...        ...        ...        ...        ...        ...
 9999968  2175.387378  2169.194698  2177.700380  1996.962135  1942.853501  1916.324173                      ...
 9999979  1994.938137  1830.922253  1823.217556  1993.885899  1436.625129  1899.035208                      ...
 9999980  1958.735897  2086.810754  2103.205981  2000.599709  3291.533833  1963.010565                      ...
 9999986  2002.481976  2039.945909  2038.244240  2068.425323  1250.346010  2066.319885                      ...
 9999992  1977.196447  1949.820874  1951.181053  1881.749111  2033.254502  1808.468535                      ...
 
-[599995 rows x 228 columns]
+[599995 rows x 34 columns]
 ```
 
-### Loading Parquet data in Python
+### Loading dataset in Python
+
+You can load the dataset in Python and apply the same field filters that you
+would at the command line.
 
 ```python
 from biobank import Dataset
 
 dataset = Dataset()
-cancer_data = dataset.select("2000[67]")
+cancer_data = dataset.select(fields=["2000[67]"])
 
 print(cancer_data)
 ```

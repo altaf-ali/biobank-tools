@@ -144,6 +144,11 @@ class Dataset:
 
         with ProgressBar():
             dataset = self.load(columns=fields, use_threads=True)
+            if limit:
+                dataset = dataset.loc[
+                    dataset.index.isin(dataset.index.head(limit))
+                ]
+
             dataset = dataset.replace(
                 to_replace={
                     col: {np.nan: ""}
@@ -153,7 +158,5 @@ class Dataset:
                 }
             )
             dataset = dataset.compute()
-            if limit:
-                dataset = dataset.iloc[:limit]
 
         return dataset
