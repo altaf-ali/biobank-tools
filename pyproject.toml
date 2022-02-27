@@ -2,7 +2,7 @@
 [tool.poetry]
 name = "biobank-tools"
 version = "0.1.1"
-homepage = "https://github.com/altaf-ali/biobank-tools"
+homepage = "https://altaf-ali.github.io/biobank-tools"
 description = "Biobank Tools."
 authors = ["Altaf Ali <altaf@firecrest.io>"]
 readme = "README.md"
@@ -20,6 +20,9 @@ packages = [
     { include = "biobank" },
     { include = "tests", format = "sdist" },
 ]
+
+[tool.poetry.urls]
+"Documentation" = "https://altaf-ali.github.io/biobank-tools"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
